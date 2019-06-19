@@ -1,28 +1,46 @@
 // Test away!
+import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import Controls from './Controls.js'
+import Controls from './Controls'
+import '@testing-library/react/cleanup-after-each';
 
 describe('<Controls />', () => {
     it('changes close gate to open gate', () => {
         const { getByText } = render(<Controls locked={false} closed={false} />);
-        const button = getByText('Close');
-        fireEvent.click(button);
-        expect(button).toContainText('Open Gate');
+        let button = getByText(/close gate/i);
+        fireEvent.click(button)
+        setTimeout(() => {
+            getByText(/open gate/i)
+        }, 1000)
+        
+    
 
     })
     it('changes close gate and locked gate to unlocked', () => {
         const { getByText } = render(<Controls locked={true} closed={true} />);
-        const button = getByText('Unlock Gate');
+        let button = getByText(/unlock gate/i);
         fireEvent.click(button);
-        expect(button).toContainText('Lock Gate');
+        getByText(/lock gate/i)
 
     })
     it('changes open gate to close gate', () => {
         const { getByText } = render(<Controls locked={false} closed={false} />);
-        const button = getByText('Close Gate');
+        let button = getByText(/close gate/i);
         fireEvent.click(button);
-        expect(button).toContainText('Open Gate');
-
+        // expect(button).toContainText(/open gate/i);
+        setTimeout(() => {
+            getByText(/open gate/i)
+        }, 1000)
+       
+    })
+    it('changes closed and unlocked to locked gate', () => {
+        const { getByText } = render(<Controls locked={false} closed={true} />);
+        let button = getByText(/lock gate/i);
+        fireEvent.click(button);
+        setTimeout(() => {
+            getByText(/unlock gate/i)
+        }, 1000)
+        
     })
 })
 
