@@ -5,16 +5,16 @@ import Controls from './Controls'
 import '@testing-library/react/cleanup-after-each';
 
 describe('<Controls />', () => {
-    it('changes close gate to open gate',  () => {
+    it('changes close gate to open gate', async () => {
         const { getByText } = render(<Controls locked={false} closed={false} />);
         let button = getByText(/close gate/i);
         fireEvent.click(button)
-        setTimeout(() => {
-            getByText(/open gate/i)
-        }, 1000)
+        const promise = getByText(/close gate/i)
+        await promise;
+
         
     })
-    it('changes close gate and locked gate to unlocked', () => {
+    it('changes close gate and locked gate to unlocked',  () => {
         const { getByText } = render(<Controls locked={true} closed={true} />);
         let button = getByText(/unlock gate/i);
         fireEvent.click(button);
@@ -25,10 +25,9 @@ describe('<Controls />', () => {
         const { getByText } = render(<Controls locked={false} closed={false} />);
         let button = getByText(/close gate/i);
         fireEvent.click(button);
-        // expect(button).toContainText(/open gate/i);
         setTimeout(() => {
             getByText(/open gate/i)
-        }, 1000)
+        })
        
     })
     it('changes closed and unlocked to locked gate', () => {
@@ -37,7 +36,7 @@ describe('<Controls />', () => {
         fireEvent.click(button);
         setTimeout(() => {
             getByText(/unlock gate/i)
-        }, 1000)
+        })
         
     })
 })
