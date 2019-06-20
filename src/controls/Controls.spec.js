@@ -5,7 +5,7 @@ import Controls from './Controls'
 import '@testing-library/react/cleanup-after-each';
 
 describe('<Controls />', () => {
-    it('changes close gate to open gate', () => {
+    it('changes close gate to open gate',  () => {
         const { getByText } = render(<Controls locked={false} closed={false} />);
         let button = getByText(/close gate/i);
         fireEvent.click(button)
@@ -13,8 +13,6 @@ describe('<Controls />', () => {
             getByText(/open gate/i)
         }, 1000)
         
-    
-
     })
     it('changes close gate and locked gate to unlocked', () => {
         const { getByText } = render(<Controls locked={true} closed={true} />);
@@ -43,5 +41,6 @@ describe('<Controls />', () => {
         
     })
 })
+//need to change code (setTimeouts) to promises/ not sure how to write.
 
 
